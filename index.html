@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ece, sana bir teklifim var 👀</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple: #7C3AED;
+      --purple-light: #EDE9FE;
+      --purple-mid: #A78BFA;
+      --pink: #EC4899;
+      --blue: #2563EB;
+      --blue-light: #DBEAFE;
+      --green: #059669;
+      --green-light: #D1FAE5;
+      --amber: #D97706;
+      --amber-light: #FEF3C7;
+      --dark: #0F0A1E;
+      --text: #1F1535;
+      --muted: #6B7280;
+      --border: #E5E7EB;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #FAFAFA; color: var(--text); line-height: 1.6; }
+
+    /* ── 1. OKUMA İLERLEME ÇUBUĞU ── */
+    #progress-bar {
+      position: fixed; top: 0; left: 0; z-index: 200;
+      height: 3px; width: 0%;
+      background: linear-gradient(90deg, var(--purple), var(--pink));
+      transition: width 0.1s linear;
+      border-radius: 0 2px 2px 0;
+    }
+
+    /* ── 2. SCROLL ANIMASYONU ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Gecikme sınıfları — grid kartlar için kademeli giriş */
+    .reveal-d1 { transition-delay: 0.05s; }
+    .reveal-d2 { transition-delay: 0.12s; }
+    .reveal-d3 { transition-delay: 0.19s; }
+    .reveal-d4 { transition-delay: 0.26s; }
+    .reveal-d5 { transition-delay: 0.33s; }
+    .reveal-d6 { transition-delay: 0.40s; }
+    .reveal-d7 { transition-delay: 0.47s; }
+
+    /* ── 3. FLOW DIAGRAM HOVER ── */
+    .flow-card {
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease !important;
+    }
+    .flow-step:hover .flow-card.ece      { transform: translateX(5px); box-shadow: -3px 4px 20px rgba(124,58,237,0.15); border-color: #A78BFA; }
+    .flow-step:hover .flow-card.akin     { transform: translateX(5px); box-shadow: -3px 4px 20px rgba(37,99,235,0.15);  border-color: #93C5FD; }
+    .flow-step:hover .flow-card.musteri  { transform: translateX(5px); box-shadow: -3px 4px 20px rgba(0,0,0,0.08);      border-color: #9CA3AF; }
+    .flow-step:hover .flow-card.milestone{ transform: translateX(5px); box-shadow: -3px 4px 20px rgba(5,150,105,0.15);  border-color: #6EE7B7; }
+    .flow-step:hover .flow-card.money    { transform: translateX(5px); box-shadow: -3px 4px 20px rgba(217,119,6,0.15);  border-color: #FCD34D; }
+    .flow-step:hover .flow-num { transform: scale(1.15); }
+    .flow-num { transition: transform 0.22s ease; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.88); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    nav .logo {
+      font-weight: 800; font-size: 1rem;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    nav ul { display: flex; gap: 1.5rem; list-style: none; }
+    nav ul a { font-size: 0.82rem; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    nav ul a:hover { color: var(--purple); }
+
+    /* MARQUEE */
+    .marquee-wrap { overflow: hidden; background: var(--dark); padding: 0.9rem 0; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .marquee-track { display: flex; gap: 2.5rem; width: max-content; animation: marquee 28s linear infinite; }
+    .marquee-track:hover { animation-play-state: paused; }
+    .marquee-item { display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.55); font-size: 0.82rem; font-weight: 600; white-space: nowrap; }
+    .marquee-item::before { content: '◆'; color: var(--purple-mid); font-size: 0.5rem; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* BRANDS SECTION */
+    #markalar { background: white; }
+    .brands-note { background: var(--purple-light); border-radius: 12px; padding: 1rem 1.5rem; font-size: 0.85rem; color: var(--purple); font-weight: 500; margin-bottom: 2rem; line-height: 1.6; }
+
+    /* PRICING */
+    #paketler { background: #F8F7FF; }
+    .pricing-note { background: linear-gradient(135deg, #EFF6FF, #EDE9FE); border: 1px solid #C4B5FD; border-radius: 12px; padding: 1rem 1.5rem; font-size: 0.85rem; color: var(--text); margin-bottom: 2.5rem; display: flex; align-items: flex-start; gap: 0.75rem; line-height: 1.6; }
+    .pricing-note span { font-size: 1.3rem; flex-shrink: 0; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+    @media (max-width: 900px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px) { .pricing-grid { grid-template-columns: 1fr; } }
+    .price-card { background: white; border: 1.5px solid var(--border); border-radius: 16px; padding: 1.5rem; position: relative; transition: transform 0.2s, box-shadow 0.2s; }
+    .price-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+    .price-card.popular { border-color: var(--purple); }
+    .popular-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--purple), var(--pink)); color: white; font-size: 0.68rem; font-weight: 800; padding: 0.25rem 0.9rem; border-radius: 100px; white-space: nowrap; letter-spacing: 0.04em; }
+    .price-plan { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+    .price-amount { font-size: 1.9rem; font-weight: 900; color: var(--text); line-height: 1; margin-bottom: 0.2rem; }
+    .price-amount sup { font-size: 0.9rem; font-weight: 700; vertical-align: super; }
+    .price-period { font-size: 0.75rem; color: var(--muted); margin-bottom: 1.25rem; }
+    .price-yearly { font-size: 0.72rem; color: var(--green); font-weight: 600; background: var(--green-light); padding: 0.2rem 0.6rem; border-radius: 100px; display: inline-block; margin-bottom: 1.25rem; }
+    .price-features { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .price-features li { font-size: 0.78rem; color: var(--muted); display: flex; align-items: flex-start; gap: 0.5rem; line-height: 1.4; }
+    .price-features li::before { content: '✓'; color: var(--green); font-weight: 800; flex-shrink: 0; margin-top: 0.05rem; }
+    .pricing-cta-note { text-align: center; font-size: 0.85rem; color: var(--muted); padding: 1rem; background: white; border: 1px solid var(--border); border-radius: 12px; }
+
+    /* SECTIONS */
+    section { padding: 6rem 1.5rem; }
+    .container { max-width: 780px; margin: 0 auto; }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #0F0A1E 0%, #1E0A3C 50%, #0F0A1E 100%);
+      display: flex; align-items: center; position: relative; overflow: hidden;
+    }
+    #hero::before {
+      content: ''; position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(124,58,237,0.3) 0%, transparent 70%);
+      top: -100px; right: -100px; border-radius: 50%;
+    }
+    #hero::after {
+      content: ''; position: absolute;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(236,72,153,0.15) 0%, transparent 70%);
+      bottom: -50px; left: -50px; border-radius: 50%;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 780px; margin: 0 auto; padding: 0 1.5rem; }
+    .hero-tag {
+      display: inline-block;
+      background: rgba(124,58,237,0.2); border: 1px solid rgba(124,58,237,0.4);
+      color: var(--purple-mid); font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      padding: 0.4rem 1rem; border-radius: 100px; margin-bottom: 1.5rem;
+    }
+    .hero-title { font-size: clamp(2.2rem, 6vw, 3.8rem); font-weight: 900; color: #fff; line-height: 1.15; margin-bottom: 1.5rem; }
+    .hero-title span { background: linear-gradient(135deg, #A78BFA, #EC4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-sub { font-size: 1.1rem; color: rgba(255,255,255,0.6); max-width: 560px; margin-bottom: 2.5rem; font-weight: 300; line-height: 1.8; }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: white; padding: 0.9rem 2rem; border-radius: 100px;
+      font-weight: 700; font-size: 0.95rem; text-decoration: none;
+      box-shadow: 0 8px 30px rgba(124,58,237,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(124,58,237,0.5); }
+
+    /* SECTION LABELS */
+    .section-tag {
+      display: inline-block; background: var(--purple-light); color: var(--purple);
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.35rem 0.9rem; border-radius: 100px; margin-bottom: 1rem;
+    }
+    .section-title { font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800; color: var(--text); margin-bottom: 0.75rem; line-height: 1.25; }
+    .section-sub { font-size: 1rem; color: var(--muted); max-width: 580px; line-height: 1.75; margin-bottom: 3rem; }
+
+    /* SHOPNEY */
+    #shopney { background: white; }
+    .shopney-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.25rem; margin-bottom: 2rem; }
+    .stat-card { background: var(--purple-light); border-radius: 14px; padding: 1.5rem; text-align: center; }
+    .stat-number { font-size: 2rem; font-weight: 900; color: var(--purple); display: block; }
+    .stat-label { font-size: 0.8rem; color: var(--muted); font-weight: 500; margin-top: 0.25rem; }
+    .shopify-link-box {
+      background: linear-gradient(135deg, #0F0A1E, #1E0A3C);
+      border-radius: 14px; padding: 1.5rem 2rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    }
+    .shopify-link-box p { color: rgba(255,255,255,0.65); font-size: 0.9rem; }
+    .shopify-link-box strong { color: white; display: block; font-size: 1rem; margin-bottom: 0.25rem; }
+    .shopify-btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: #96BF48; color: white; padding: 0.65rem 1.4rem;
+      border-radius: 100px; font-size: 0.85rem; font-weight: 700;
+      text-decoration: none; white-space: nowrap; transition: opacity 0.2s;
+    }
+    .shopify-btn:hover { opacity: 0.85; }
+
+    /* ============================================
+       SÜREÇ AKIŞI — FLOW DIAGRAM
+       ============================================ */
+    #surec { background: #F8F7FF; }
+
+    /* Legend */
+    .flow-legend {
+      display: flex; gap: 1.25rem; flex-wrap: wrap; margin-bottom: 2.5rem;
+    }
+    .legend-item {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.8rem; font-weight: 600; color: var(--muted);
+    }
+    .legend-dot {
+      width: 12px; height: 12px; border-radius: 50%;
+    }
+
+    /* Flow wrapper */
+    .flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* Each step row */
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+      position: relative;
+    }
+
+    /* Connector line between steps */
+    .flow-connector {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0.3rem 0;
+    }
+    .flow-connector .line {
+      width: 2px;
+      height: 28px;
+      background: var(--border);
+    }
+
+    /* Left column: number bubble */
+    .flow-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+      width: 40px;
+    }
+    .flow-num {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 800; color: white;
+      flex-shrink: 0;
+    }
+    .flow-num.ece   { background: linear-gradient(135deg, var(--purple), var(--purple-mid)); }
+    .flow-num.akin  { background: linear-gradient(135deg, var(--blue), #60A5FA); }
+    .flow-num.musteri { background: linear-gradient(135deg, #374151, #6B7280); }
+    .flow-num.milestone { background: linear-gradient(135deg, var(--green), #34D399); }
+    .flow-num.money { background: linear-gradient(135deg, var(--amber), #FCD34D); }
+
+    /* Right column: card */
+    .flow-card {
+      flex: 1;
+      border-radius: 14px;
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 0;
+      border: 1.5px solid transparent;
+    }
+    .flow-card.ece      { background: #F5F3FF; border-color: #DDD6FE; }
+    .flow-card.akin     { background: #EFF6FF; border-color: #BFDBFE; }
+    .flow-card.musteri  { background: #F9FAFB; border-color: #E5E7EB; }
+    .flow-card.milestone { background: #ECFDF5; border-color: #A7F3D0; }
+    .flow-card.money    { background: #FFFBEB; border-color: #FDE68A; }
+
+    .flow-who {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.07em;
+      text-transform: uppercase; margin-bottom: 0.3rem;
+    }
+    .flow-who.ece      { color: var(--purple); }
+    .flow-who.akin     { color: var(--blue); }
+    .flow-who.musteri  { color: #6B7280; }
+    .flow-who.milestone { color: var(--green); }
+    .flow-who.money    { color: var(--amber); }
+
+    .flow-card h4 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+    .flow-card p  { font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
+
+    /* Special: Ece done banner */
+    .ece-done {
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      display: flex; align-items: center; gap: 1rem;
+      margin: 0.4rem 0 0.4rem 3.25rem;
+    }
+    .ece-done-icon { font-size: 1.5rem; }
+    .ece-done-text strong { display: block; color: white; font-size: 0.95rem; font-weight: 800; }
+    .ece-done-text span { color: rgba(255,255,255,0.75); font-size: 0.8rem; }
+
+    /* Vertical line for connector inside flow */
+    .flow-vline {
+      margin-left: 19px;
+      width: 2px; height: 22px;
+      background: linear-gradient(180deg, #C4B5FD, #BFDBFE);
+      border-radius: 2px;
+    }
+
+    /* ============================================
+       AKININ YAPTIĞI DETAYLAR — TIMELINE
+       ============================================ */
+    #akin-detay { background: white; }
+    .timeline { position: relative; padding-left: 2.25rem; }
+    .timeline::before {
+      content: ''; position: absolute; left: 11px; top: 0; bottom: 0;
+      width: 2px; background: linear-gradient(180deg, var(--blue), #60A5FA); border-radius: 2px;
+    }
+    .timeline-item { position: relative; margin-bottom: 1.4rem; }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-dot {
+      position: absolute; left: -2.25rem; top: 0.85rem;
+      width: 24px; height: 24px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), #60A5FA);
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 0.62rem; font-weight: 800;
+      box-shadow: 0 0 0 4px var(--blue-light);
+    }
+    .timeline-card { background: #F8FAFF; border: 1px solid #DBEAFE; border-radius: 12px; padding: 1.1rem 1.4rem; }
+    .timeline-card h4 { font-size: 0.92rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+    .timeline-card p  { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+    /* KAZANÇ */
+    #kazanc { background: #F8F7FF; }
+    .benefit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; }
+    .benefit-card { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; transition: transform 0.2s; }
+    .benefit-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+    .benefit-icon { font-size: 1.75rem; margin-bottom: 0.75rem; display: block; }
+    .benefit-card h4 { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--text); }
+    .benefit-card p { font-size: 0.8rem; color: var(--muted); line-height: 1.65; }
+
+    /* MÜŞTERİ */
+    #musteri { background: white; }
+    .musteri-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    .musteri-table th { background: var(--dark); color: white; padding: 0.9rem 1.25rem; text-align: left; font-weight: 600; font-size: 0.78rem; }
+    .musteri-table th:first-child { border-radius: 10px 0 0 0; }
+    .musteri-table th:last-child  { border-radius: 0 10px 0 0; }
+    .musteri-table td { padding: 0.9rem 1.25rem; border-bottom: 1px solid var(--border); background: white; vertical-align: top; }
+    .musteri-table tr:last-child td { border-bottom: none; }
+    .musteri-table tr:last-child td:first-child { border-radius: 0 0 0 10px; }
+    .musteri-table tr:last-child td:last-child  { border-radius: 0 0 10px 0; }
+    .musteri-table td:first-child { font-weight: 600; color: var(--purple); }
+    .check { color: #059669; font-weight: 700; }
+
+    /* 30 GÜN BANNER */
+    .trial-banner {
+      background: linear-gradient(135deg, #ECFDF5, #D1FAE5);
+      border: 1.5px solid #A7F3D0;
+      border-radius: 14px;
+      padding: 1.5rem 2rem;
+      display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+    .trial-banner .trial-icon { font-size: 2.5rem; }
+    .trial-banner strong { display: block; color: var(--green); font-size: 1.1rem; font-weight: 800; margin-bottom: 0.25rem; }
+    .trial-banner p { color: #065F46; font-size: 0.88rem; line-height: 1.6; }
+
+    /* SON */
+    #son { background: linear-gradient(160deg, #0F0A1E 0%, #1E0A3C 100%); text-align: center; }
+    #son .section-title { color: white; }
+    #son .section-sub { color: rgba(255,255,255,0.5); margin: 0 auto 2.5rem; }
+    .son-box {
+      background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3);
+      border-radius: 16px; padding: 2rem; max-width: 520px; margin: 0 auto;
+    }
+    .son-box p { color: rgba(255,255,255,0.8); font-size: 1rem; line-height: 1.8; }
+    .son-box strong { color: white; }
+
+    .divider { height: 1px; background: var(--border); }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .shopify-link-box { flex-direction: column; align-items: flex-start; }
+      .ece-done { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- OKUMA İLERLEME ÇUBUĞU -->
+  <div id="progress-bar"></div>
+
+  <!-- NAV -->
+  <nav>
+    <span class="logo">Akın × Ece</span>
+    <ul>
+      <li><a href="#shopney">Shopney</a></li>
+      <li><a href="#markalar">Markalar</a></li>
+      <li><a href="#paketler">Paketler</a></li>
+      <li><a href="#surec">Süreç</a></li>
+      <li><a href="#kazanc">Kazancın</a></li>
+      <li><a href="#musteri">Müşteri</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-content">
+      <span class="hero-tag">Ece, bu sana özel 👀</span>
+      <h1 class="hero-title">
+        Ajansına bir<br/>
+        <span>süper güç</span><br/>
+        ekleyelim mi?
+      </h1>
+      <p class="hero-sub">
+        Müşterilerinin web siteleri var. Uygulamaları yok.
+        Bu, her gün masada bırakılan para demek.
+        Ben bunu çözebilirim — sen sadece tanıtımı yaparsın.
+      </p>
+      <a href="#shopney" class="hero-cta">Nasıl? Anlat bakalım →</a>
+    </div>
+  </section>
+
+  <!-- SHOPNEY -->
+  <section id="shopney">
+    <div class="container">
+      <span class="section-tag">Platform</span>
+      <h2 class="section-title">Çalıştığım platform: Shopney</h2>
+      <p class="section-sub">
+        Shopify mağazalarını iOS ve Android uygulamasına dönüştüren, alanında dünyanın en güvenilir platformlarından biri.
+        Sadece benim sözüm değil — rakamlar konuşuyor.
+      </p>
+      <div class="shopney-stats reveal">
+        <div class="stat-card">
+          <span class="stat-number" data-count="5.0" data-decimals="1">0</span>
+          <span class="stat-label">Shopify App Store Puanı ⭐</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number" data-count="743" data-decimals="0">0</span>
+          <span class="stat-label">Kullanıcı Yorumu</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">#1</span>
+          <span class="stat-label">En Fazla Yorum & En Yüksek Puan</span>
+        </div>
+      </div>
+      <div class="shopify-link-box">
+        <div>
+          <strong>Shopify'ın resmi mağazasında kendin gör</strong>
+          <p>Kategorisindeki tüm rakiplerine bak — fark ortada.<br/>
+          <span style="color:rgba(255,255,255,0.45);font-size:0.8rem;">(Reklam ile öne çıkarılmış builderların hemen altında 1. sırada Shopney'i görebilirsin. Dünyada 1.'ler.)</span></p>
+        </div>
+        <a href="https://apps.shopify.com/categories/store-design-storefronts-mobile-app-builder/all?locale=tr" target="_blank" class="shopify-btn">
+          Shopify'da Gör →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- MARKALAR -->
+  <section id="markalar">
+    <div class="container">
+      <span class="section-tag">Referanslar</span>
+      <h2 class="section-title">Shopney ile çalışan markalar</h2>
+      <p class="section-sub">
+        Dünyanın dört bir yanından markalar Shopney ile Shopify mağazalarını mobil uygulamaya taşıdı.
+      </p>
+
+      <div class="brands-note reveal">
+        💡 Bunlar Shopney'in gerçek müşteri markaları — moda, güzellik, yaşam tarzı ve daha fazlası.
+        Müşterinin markası da bu listede yerini alabilir.
+      </div>
+    </div>
+
+    <!-- Marquee ticker -->
+    <div class="marquee-wrap">
+      <div class="marquee-track">
+        <span class="marquee-item">Ohlala Sellerie</span>
+        <span class="marquee-item">Bella All Natural</span>
+        <span class="marquee-item">Bad Monday</span>
+        <span class="marquee-item">Shopi Go</span>
+        <span class="marquee-item">Miss Odd</span>
+        <span class="marquee-item">Mod Boutique</span>
+        <span class="marquee-item">Modern Quests</span>
+        <span class="marquee-item">Milagron</span>
+        <span class="marquee-item">Rowen</span>
+        <span class="marquee-item">SM Global Shop</span>
+        <span class="marquee-item">Moda More Positano</span>
+        <span class="marquee-item">Teami</span>
+        <span class="marquee-item">Touché Privé</span>
+        <span class="marquee-item">Valabasas</span>
+        <!-- duplicate for seamless loop -->
+        <span class="marquee-item">Ohlala Sellerie</span>
+        <span class="marquee-item">Bella All Natural</span>
+        <span class="marquee-item">Bad Monday</span>
+        <span class="marquee-item">Shopi Go</span>
+        <span class="marquee-item">Miss Odd</span>
+        <span class="marquee-item">Mod Boutique</span>
+        <span class="marquee-item">Modern Quests</span>
+        <span class="marquee-item">Milagron</span>
+        <span class="marquee-item">Rowen</span>
+        <span class="marquee-item">SM Global Shop</span>
+        <span class="marquee-item">Moda More Positano</span>
+        <span class="marquee-item">Teami</span>
+        <span class="marquee-item">Touché Privé</span>
+        <span class="marquee-item">Valabasas</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PAKETLER -->
+  <section id="paketler">
+    <div class="container">
+      <span class="section-tag">Fiyatlandırma</span>
+      <h2 class="section-title">Müşterinin seçebileceği paketler</h2>
+      <p class="section-sub">
+        Shopney'in 4 farklı planı var. Müşteriyle birlikte analiz yapıp en uygun paketi birlikte seçeceğiz.
+      </p>
+
+      <div class="pricing-note reveal">
+        <span>🤝</span>
+        <span>Paket seçiminde müşteriyi yalnız bırakmıyorum — ihtiyaçlarını birlikte değerlendirip en doğru pakete birlikte karar vereceğiz. <strong>30 günlük ücretsiz deneme</strong> ile müşteri ödeme yapmadan önce her şeyi test edebilir.</span>
+      </div>
+
+      <div class="pricing-grid">
+
+        <!-- Silver -->
+        <div class="price-card reveal reveal-d1">
+          <div class="price-plan">Silver</div>
+          <div class="price-amount"><sup>$</sup>149</div>
+          <div class="price-period">/ ay</div>
+          <ul class="price-features">
+            <li>Native iOS & Android</li>
+            <li>Sınırsız push notification</li>
+            <li>Stok bildirimleri</li>
+            <li>In-App Chat</li>
+            <li>Google Analytics & Facebook Ads</li>
+            <li>7/24 canlı destek</li>
+          </ul>
+        </div>
+
+        <!-- Gold -->
+        <div class="price-card reveal reveal-d2">
+          <div class="price-plan">Gold</div>
+          <div class="price-amount"><sup>$</sup>299</div>
+          <div class="price-period">/ ay</div>
+          <ul class="price-features">
+            <li>Silver'daki her şey</li>
+            <li>Terk edilen sepet bildirimi</li>
+            <li>Ürün yorum entegrasyonu</li>
+            <li>Çoklu dil & para birimi</li>
+            <li>Gelişmiş arama & filtre</li>
+            <li>7/24 canlı destek</li>
+          </ul>
+        </div>
+
+        <!-- Platinum -->
+        <div class="price-card popular reveal reveal-d3">
+          <div class="popular-badge">⭐ EN POPÜLER</div>
+          <div class="price-plan">Platinum</div>
+          <div class="price-amount"><sup>$</sup>599</div>
+          <div class="price-period">/ ay</div>
+          <ul class="price-features">
+            <li>Gold'daki her şey</li>
+            <li>AI & segmentli bildirimler</li>
+            <li>AR (Artırılmış Gerçeklik)</li>
+            <li>Barkod tarama</li>
+            <li>Canlı satış (Live Selling)</li>
+            <li>Loyalty & abonelik entegrasyonu</li>
+          </ul>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="price-card reveal reveal-d4">
+          <div class="price-plan">Enterprise</div>
+          <div class="price-amount" style="font-size:1.4rem;">$1,299<sup style="font-size:0.7rem;">/ay'dan</sup></div>
+          <div class="price-period">Shopify Plus & büyük hacimli mağazalar</div>
+          <ul class="price-features">
+            <li>Platinum'daki her şey</li>
+            <li>Çoklu mağaza desteği</li>
+            <li>Profesyonel tasarım desteği</li>
+            <li>Kişisel Success Manager</li>
+            <li>AppsFlyer & Adjust entegrasyonu</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="pricing-cta-note">
+        Hangi paketin uygun olduğunu bilmiyorsan sorun değil — <strong>birlikte karar vereceğiz.</strong>
+      </div>
+
+      <div class="shopify-link-box" style="margin-top:1.25rem;">
+        <div>
+          <strong>Paketlerin tamamını kendin incele</strong>
+          <p>Her planın detaylı özellik listesi ve güncel fiyatları Shopney'in resmi sayfasında.</p>
+        </div>
+        <a href="https://shopney.co/pricing" target="_blank" class="shopify-btn">
+          Fiyatları Gör →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SÜREÇ AKIŞI -->
+  <section id="surec">
+    <div class="container">
+      <span class="section-tag">Süreç akışı</span>
+      <h2 class="section-title">Kim ne yapıyor, hangi sırayla?</h2>
+      <p class="section-sub">
+        Adım adım, renk renk. Senin rolün ne kadar az, kazancın ne kadar fazla — kendin gör.
+      </p>
+
+      <!-- Legend -->
+      <div class="flow-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div> Ece</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div> Akın</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#6B7280"></div> Müşteri</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> Kilometre taşı</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--amber)"></div> Kazanç</div>
+      </div>
+
+      <div class="flow">
+
+        <!-- 1 -->
+        <div class="flow-step">
+          <div class="flow-left"><div class="flow-num ece">1</div></div>
+          <div class="flow-card ece">
+            <div class="flow-who ece">Ece</div>
+            <h4>Müşterisine mobil uygulama teklifinde bulunur</h4>
+            <p>Mevcut müşterisine proaktif bir fırsat sunar: "Sana güzel bir şey getirdim, web sitenin mobil uygulaması olsun mu?"</p>
+          </div>
+        </div>
+
+        <div class="flow-vline"></div>
+
+        <!-- 2 -->
+        <div class="flow-step">
+          <div class="flow-left"><div class="flow-num musteri">2</div></div>
+          <div class="flow-card musteri">
+            <div class="flow-who musteri">Müşteri</div>
+            <h4>Teklifi kabul eder</h4>
+            <p>Güvendiği ajansından geldi, araştırma derdi yok. "Tamam, nasıl ilerleyeceğiz?" der.</p>
+          </div>
+        </div>
+
+        <div class="flow-vline"></div>
+
+        <!-- 3 -->
+        <div class="flow-step">
+          <div class="flow-left"><div class="flow-num ece">3</div></div>
+          <div class="flow-card ece">
+            <div class="flow-who ece">Ece</div>
+            <h4>Akın'ın e-posta adresini müşteriye iletir</h4>
+            <p>"Bundan sonraki her şeyle Akın ilgilenecek, kendisi seni arayacak." — tek bir mesaj.</p>
+          </div>
+        </div>
+
+        <!-- ECE'NİN İŞİ BİTTİ BANNER -->
+        <div class="ece-done">
+          <div class="ece-done-icon">✅</div>
+          <div class="ece-done-text">
+            <strong>Ece'nin işi burada bitiyor.</strong>
+            <span>Bundan sonraki tüm süreç Akın tarafından yönetilir.</span>
+          </div>
+        </div>
+
+        <div class="flow-vline"></div>
+
+        <!-- 4 -->
+        <div class="flow-step">
+          <div class="flow-left"><div class="flow-num akin">4</div></div>
+          <div class="flow-card akin">
+            <div class="flow-who akin">Akın</div>
+            <h4>Müşteriye detaylı bir mail gönderir ✉️</h4>
+            <p>Web sitesi, marka, hedefler, beklentiler, must-have özellikler — her şeyi anlamak için kapsamlı bir analiz maili gider. Hiçbir şey telefonda değil, her şey yazılı ve net.</p>
+          </div>
+        </div>
+
+        <div class="flow-vline"></div>
+
+        <!-- 5 -->
+        <div class="flow-step">
+          <div class="flow-left"><div class="flow-num akin">5</div></div>
+          <div class="flow-card akin">
+            <div class="flow-who akin">Akın × Müşteri</div>
+            <h4>Mail üzerinden süreç ilerler — uygulama şekillenir</h4>
+            <p>Tüm iletişim mail yoluyla yürür. Özellikler netleşir, tasarım yönü belirlenir, teknik yapılabilirlik değerlendirilir. Müşteri istediği her şeyi rahat rahat iletir.</p>
+          </div>
+        </div>
+
+        <div class="flow-vline"></div>
+
+        <!-- 6 -->
+        <div class="flow-step">
+          <div class="flow-left"><div class="flow-num milestone">6</div></div>
+          <div class="flow-card milestone">
+            <div class="flow-who milestone">Kilometre Taşı</div>
+            <h4>30 günlük ücretsiz deneme başlar 🎁</h4>
+            <p>Müşteri hiçbir ödeme yapmadan uygulamasını test eder. Beğenmezse vazgeçer — sıfır risk, sıfır baskı.</p>
+          </div>
+        </div>
+
+        <div class="flow-vline"></div>
+
+        <!-- 7 -->
+        <div class="flow-step">
+          <div class="flow-left"><div class="flow-num akin">7</div></div>
+          <div class="flow-card akin">
+            <div class="flow-who akin">Akın</div>
+            <h4>Her şeyi hazırlar — analiz, tasarım, özellikler, test, App Store</h4>
+            <p>Web sitesi analizi, marka uyarlaması, özellik aktivasyonu, test süreci, App Store & Google Play yayını. Tamamı Akın'da.</p>
+          </div>
+        </div>
+
+        <div class="flow-vline"></div>
+
+        <!-- 8 -->
+        <div class="flow-step">
+          <div class="flow-left"><div class="flow-num milestone">8</div></div>
+          <div class="flow-card milestone">
+            <div class="flow-who milestone">Kilometre Taşı</div>
+            <h4>Uygulama LIVE 🚀</h4>
+            <p>Uygulama App Store ve Google Play'de yayında. Müşteriye tam hazır teslim edilir, büyüme brifingi yapılır.</p>
+          </div>
+        </div>
+
+        <div class="flow-vline"></div>
+
+        <!-- 9 -->
+        <div class="flow-step">
+          <div class="flow-left"><div class="flow-num musteri">9</div></div>
+          <div class="flow-card musteri">
+            <div class="flow-who musteri">Müşteri</div>
+            <h4>Ödeme yapar</h4>
+            <p>30 günlük deneme sonrasında uygulamasını beğenen müşteri aboneliğini başlatır.</p>
+          </div>
+        </div>
+
+        <div class="flow-vline"></div>
+
+        <!-- 10 -->
+        <div class="flow-step">
+          <div class="flow-left"><div class="flow-num money">10</div></div>
+          <div class="flow-card money">
+            <div class="flow-who money">Ece'nin Kazancı</div>
+            <h4>Müşterinin ilk ödemesinden ikimiz faydalanıyoruz 💰</h4>
+            <p>Deneme sonrası müşteri paketini seçtiğinde ilk ödemesinden Ece payını alır. Bundan sonra Akın ve Ece maddi olarak süreçten çekilir.</p>
+          </div>
+        </div>
+
+        <div class="flow-vline"></div>
+
+        <!-- 11 -->
+        <div class="flow-step">
+          <div class="flow-left"><div class="flow-num milestone">11</div></div>
+          <div class="flow-card milestone">
+            <div class="flow-who milestone">Devam eden ilişki</div>
+            <h4>Müşteri artık doğrudan Shopney ile çalışır 🤝</h4>
+            <p>Müşteri istediği zaman uygulamasını güncelleyebilir, yeni özellikler ekleyebilir, destek alabilir. Tüm bunları doğrudan Shopney üzerinden yapar — herhangi bir aracıya ihtiyaç duymadan.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- AKIN'IN YAPTIĞI DETAYLAR -->
+  <section id="akin-detay">
+    <div class="container">
+      <span class="section-tag" style="background:var(--blue-light);color:var(--blue);">Akın ne yapıyor?</span>
+      <h2 class="section-title">Perde arkasında neler dönüyor</h2>
+      <p class="section-sub">
+        Ece e-posta adresini ilettiği andan itibaren Akın devralır. İşte adım adım neler yapıldığı.
+      </p>
+
+      <div class="timeline">
+
+        <div class="timeline-item reveal">
+          <div class="timeline-dot">1</div>
+          <div class="timeline-card">
+            <h4>Web sitesi analizi</h4>
+            <p>Müşterinin sitesi baştan sona incelenir — tasarım dili, ürün yapısı, özellikler, kullanıcı deneyimi. Uygulamanın temeli buradan çıkar.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot">2</div>
+          <div class="timeline-card">
+            <h4>Beklenti & gereksinim toplantısı</h4>
+            <p>Müşteriyle mailleşilerek beklentiler, must-have özellikler ve opsiyonel istekler netleştirilir.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot">3</div>
+          <div class="timeline-card">
+            <h4>Yapılabilirlik & teknik analiz</h4>
+            <p>Talep edilen her özelliğin platforma uygunluğu değerlendirilir. Gerçekçi ve şeffaf bir yol haritası oluşturulur.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot">4</div>
+          <div class="timeline-card">
+            <h4>Tasarım uyarlaması</h4>
+            <p>Web sitesinin tasarım dili uygulamaya taşınır — renkler, fontlar, görseller, genel his. Marka tutarlılığı korunur.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot">5</div>
+          <div class="timeline-card">
+            <h4>Özellik aktivasyonu & test</h4>
+            <p>Tüm özellikler devreye alınır, her biri test edilir. Müşteriye sunulmadan önce her şey kontrol altındadır.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot">6</div>
+          <div class="timeline-card">
+            <h4>Müşteri onayı</h4>
+            <p>Demo sunulur, geri bildirimler alınır, düzeltmeler yapılır. Müşteri "tamam" demeden devam edilmez.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot">7</div>
+          <div class="timeline-card">
+            <h4>App Store & Google Play yayını</h4>
+            <p>Listing formu hazırlanır, Apple & Google Developer hesapları kurulur, başvuru yapılır, review süreci takip edilir.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot">8</div>
+          <div class="timeline-card">
+            <h4>Büyüme brifingi</h4>
+            <p>Uygulama yayına girdikten sonra müşteriyle oturup uygulamanın nasıl tanıtılacağı ve büyütüleceği detaylıca anlatılır.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- KAZANÇ -->
+  <section id="kazanc">
+    <div class="container">
+      <span class="section-tag">Senin kazancın</span>
+      <h2 class="section-title">Peki bu sana ne katıyor?</h2>
+      <p class="section-sub">
+        Tek bir teknik toplantıya girmeden, tek bir satır kod yazmadan ajansına ciddi bir hizmet eklenmiş oluyor.
+      </p>
+      <div class="benefit-grid">
+        <div class="benefit-card reveal reveal-d1">
+          <span class="benefit-icon">📋</span>
+          <h4>Yeni hizmet kalemi</h4>
+          <p>Ajansının listesine "Mobil Uygulama" ekleniyor. Rakip ajansların büyük çoğunluğu bunu sunmuyor.</p>
+        </div>
+        <div class="benefit-card reveal reveal-d2">
+          <span class="benefit-icon">💎</span>
+          <h4>Ajans değeri artar</h4>
+          <p>"Hem marka yönetimi hem uygulama" diyen ajans çok farklı bir teklif. Müşteri başka yere bakma ihtiyacı duymuyor.</p>
+        </div>
+        <div class="benefit-card reveal reveal-d3">
+          <span class="benefit-icon">🔗</span>
+          <h4>Müşteri bağlılığı</h4>
+          <p>Müşteri her ihtiyacı için sana dönüyor. Ajansın onun için tek adres haline geliyor.</p>
+        </div>
+        <div class="benefit-card reveal reveal-d4">
+          <span class="benefit-icon">📣</span>
+          <h4>Güçlü reklam materyali</h4>
+          <p>"Ajansım mobil uygulama da yapıyor" cümlesi dikkat çeker. Sosyal medyada çok güçlü bir duyuru.</p>
+        </div>
+        <div class="benefit-card reveal reveal-d5">
+          <span class="benefit-icon">⚡</span>
+          <h4>Sıfır teknik yük</h4>
+          <p>Geliştirme, test, app store — bunların hiçbirini sen yapmıyorsun. Sadece müşteriyle ilk bağlantıyı kuruyorsun.</p>
+        </div>
+        <div class="benefit-card reveal reveal-d6">
+          <span class="benefit-icon">💰</span>
+          <h4>İlk ödemeden pay</h4>
+          <p>Müşteri deneme süresi sonrası paketini seçtiğinde ilk ödemesinden ikimiz faydalanıyoruz. Sonrasında maddi olarak aradan çekiliyoruz.</p>
+        </div>
+        <div class="benefit-card reveal reveal-d7">
+          <span class="benefit-icon">🧲</span>
+          <h4>Daha fazla müşteri kazanırsın</h4>
+          <p>Mobil uygulama hizmetini öne çıkararak ajansına yeni müşteriler çekebilirsin. Rakip ajansların sunmadığı çok cazip bir özellik.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- MÜŞTERİ -->
+  <section id="musteri">
+    <div class="container">
+      <span class="section-tag">Müşterinin kazancı</span>
+      <h2 class="section-title">Müşteri neden "evet" der?</h2>
+      <p class="section-sub">
+        Güvendiği ajansından geliyor. Sıfır araştırma, sıfır bilinmez — ve 30 gün boyunca hiçbir risk yok.
+      </p>
+
+      <table class="musteri-table">
+        <thead>
+          <tr>
+            <th>Durum</th>
+            <th>Uygulamasız</th>
+            <th>Uygulamayla</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Satışlar</td>
+            <td>Sadece web trafiğine bağlı</td>
+            <td><span class="check">✓</span> Uygulama kullanıcıları daha çok satın alır</td>
+          </tr>
+          <tr>
+            <td>Mobil deneyim</td>
+            <td>Tarayıcı üzerinden, yavaş</td>
+            <td><span class="check">✓</span> Native uygulama, hızlı ve akıcı</td>
+          </tr>
+          <tr>
+            <td>Müşteriye ulaşım</td>
+            <td>E-posta veya reklam bekle</td>
+            <td><span class="check">✓</span> Push notification ile doğrudan ulaş</td>
+          </tr>
+          <tr>
+            <td>Rakiplerden ayrışma</td>
+            <td>Standart web mağazası</td>
+            <td><span class="check">✓</span> App Store'da kendi markası</td>
+          </tr>
+          <tr>
+            <td>Marka güveni</td>
+            <td>Web sitesi</td>
+            <td><span class="check">✓</span> "Bu markanın uygulaması var" algısı</td>
+          </tr>
+          <tr>
+            <td>Teknik süreç derdi</td>
+            <td>—</td>
+            <td><span class="check">✓</span> Sıfır — her şey yönetilir</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- 30 gün trial banner -->
+      <div class="trial-banner">
+        <div class="trial-icon">🎁</div>
+        <div>
+          <strong>30 Gün Ücretsiz Deneme</strong>
+          <p>Müşteri uygulamasını 30 gün boyunca hiçbir ödeme yapmadan test eder.<br/>
+          Beğenmezse vazgeçer — hiçbir baskı, hiçbir risk. Tamamen güvenli bir karar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SON ADIM -->
+  <section id="son">
+    <div class="container">
+      <span class="section-tag" style="background:rgba(124,58,237,0.2);color:#A78BFA;">Son adım</span>
+      <h2 class="section-title">Ne dersin, Ece?</h2>
+      <p class="section-sub">Aklında takılan bir şey varsa sor. Konuşalım.</p>
+      <div class="son-box">
+        <p>
+          Tek yapman gereken şey müşterine <strong>"iyi bir fırsatım var"</strong> demek.<br/><br/>
+          Geri kalan kısımda ben müşteriye ulaşıp her şeyi yönetiyorum — mail, analiz, tasarım, test, yayın, büyüme.<br/><br/>
+          Müşterinin deneme süresi bitip yeni paketi seçtiğinde <strong>ilk ödemesinden ikimiz faydalanacağız.</strong><br/><br/>
+          Sonrasında maddi kazanç anlamında biz aradan çekileceğiz.
+          Müşteri Shopney ile kendi yoluna devam eder —
+          <strong>istediği zaman destek alır, özellik ekler, günceller.</strong>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    /* ══════════════════════════════════════════
+       1. OKUMA İLERLEME ÇUBUĞU
+       ══════════════════════════════════════════ */
+    const progressBar = document.getElementById('progress-bar');
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progressBar.style.width = pct + '%';
+    }, { passive: true });
+
+    /* ══════════════════════════════════════════
+       2. SCROLL ANIMASYONU (Intersection Observer)
+       ══════════════════════════════════════════ */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    /* ══════════════════════════════════════════
+       3. SAYAÇ ANİMASYONU
+       ══════════════════════════════════════════ */
+    function animateCounter(el) {
+      const target = parseFloat(el.dataset.count);
+      const decimals = parseInt(el.dataset.decimals) || 0;
+      const duration = 1800;
+      const steps = 60;
+      const increment = target / steps;
+      let current = 0;
+      let step = 0;
+
+      // Easing: ease-out
+      function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+      const timer = setInterval(() => {
+        step++;
+        const progress = easeOut(step / steps);
+        current = target * progress;
+        el.textContent = current.toFixed(decimals);
+        if (step >= steps) {
+          el.textContent = target.toFixed(decimals);
+          clearInterval(timer);
+        }
+      }, duration / steps);
+    }
+
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
+
+    /* ══════════════════════════════════════════
+       4. FLOW ADIMLARINI SIRASIY­LA REVEAL ET
+          (sayfa yüklenince statik değil, sırayla gelsin)
+       ══════════════════════════════════════════ */
+    const flowSteps = document.querySelectorAll('.flow-step, .ece-done');
+    const flowObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('flow-visible');
+          flowObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
+
+    // CSS için stil ekle
+    const style = document.createElement('style');
+    style.textContent = `
+      .flow-step, .ece-done {
+        opacity: 0;
+        transform: translateX(-18px);
+        transition: opacity 0.45s ease, transform 0.45s ease;
+      }
+      .flow-step.flow-visible, .ece-done.flow-visible {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Her adıma küçük gecikme farkı ver
+    flowSteps.forEach((el, i) => {
+      el.style.transitionDelay = (i * 0.07) + 's';
+      flowObserver.observe(el);
+    });
+  </script>
+
+</body>
+</html>
