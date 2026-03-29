@@ -99,8 +99,9 @@
 
     /* PRICING */
     #paketler { background: #F8F7FF; }
-    .pricing-note { background: linear-gradient(135deg, #EFF6FF, #EDE9FE); border: 1px solid #C4B5FD; border-radius: 12px; padding: 1rem 1.5rem; font-size: 0.85rem; color: var(--text); margin-bottom: 2.5rem; display: flex; align-items: flex-start; gap: 0.75rem; line-height: 1.6; }
+    .pricing-note { background: linear-gradient(135deg, #EFF6FF, #EDE9FE); border: 1px solid #C4B5FD; border-radius: 12px; padding: 1rem 1.5rem; font-size: 0.85rem; color: var(--text); margin-bottom: 2.5rem; display: flex; align-items: flex-start; gap: 0.75rem; line-height: 1.6; flex-wrap: wrap; overflow-wrap: break-word; word-break: break-word; }
     .pricing-note span { font-size: 1.3rem; flex-shrink: 0; }
+    .pricing-note p { flex: 1; min-width: 0; }
     .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
     @media (max-width: 900px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 520px) { .pricing-grid { grid-template-columns: 1fr; } }
@@ -109,9 +110,10 @@
     .price-card.popular { border-color: var(--purple); }
     .popular-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--purple), var(--pink)); color: white; font-size: 0.68rem; font-weight: 800; padding: 0.25rem 0.9rem; border-radius: 100px; white-space: nowrap; letter-spacing: 0.04em; }
     .price-plan { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
-    .price-amount { font-size: 1.9rem; font-weight: 900; color: var(--text); line-height: 1; margin-bottom: 0.2rem; }
+    .price-amount { font-size: 1.9rem; font-weight: 900; color: var(--text); line-height: 1; margin-bottom: 1.25rem; display: flex; align-items: baseline; gap: 0.2rem; }
     .price-amount sup { font-size: 0.9rem; font-weight: 700; vertical-align: super; }
-    .price-period { font-size: 0.75rem; color: var(--muted); margin-bottom: 1.25rem; }
+    .price-amount .per { font-size: 0.8rem; font-weight: 500; color: var(--muted); }
+    .price-period { display: none; }
     .price-yearly { font-size: 0.72rem; color: var(--green); font-weight: 600; background: var(--green-light); padding: 0.2rem 0.6rem; border-radius: 100px; display: inline-block; margin-bottom: 1.25rem; }
     .price-features { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
     .price-features li { font-size: 0.78rem; color: var(--muted); display: flex; align-items: flex-start; gap: 0.5rem; line-height: 1.4; }
@@ -433,7 +435,7 @@
           <span class="stat-label">Shopify App Store Puanı ⭐</span>
         </div>
         <div class="stat-card">
-          <span class="stat-number" data-count="743" data-decimals="0">0</span>
+          <span class="stat-number" data-count="744" data-decimals="0">0</span>
           <span class="stat-label">Kullanıcı Yorumu</span>
         </div>
         <div class="stat-card">
@@ -520,7 +522,7 @@
 
       <div class="pricing-note reveal">
         <span>🤝</span>
-        <span>Paket seçiminde müşteriyi yalnız bırakmıyorum — ihtiyaçlarını birlikte değerlendirip en doğru pakete birlikte karar vereceğiz. <strong>30 günlük ücretsiz deneme</strong> ile müşteri ödeme yapmadan önce her şeyi test edebilir.</span>
+        <p>Paket seçiminde müşteriyi yalnız bırakmıyorum — ihtiyaçlarını birlikte değerlendirip en doğru pakete birlikte karar vereceğiz. <strong>30 günlük ücretsiz deneme</strong> ile müşteri ödeme yapmadan önce her şeyi test edebilir.</p>
       </div>
 
       <div class="pricing-grid">
@@ -528,8 +530,7 @@
         <!-- Silver -->
         <div class="price-card reveal reveal-d1">
           <div class="price-plan">Silver</div>
-          <div class="price-amount"><sup>$</sup>149</div>
-          <div class="price-period">/ ay</div>
+          <div class="price-amount"><sup>$</sup>149<span class="per">/ay</span></div>
           <ul class="price-features">
             <li>Native iOS & Android</li>
             <li>Sınırsız push notification</li>
@@ -543,8 +544,7 @@
         <!-- Gold -->
         <div class="price-card reveal reveal-d2">
           <div class="price-plan">Gold</div>
-          <div class="price-amount"><sup>$</sup>299</div>
-          <div class="price-period">/ ay</div>
+          <div class="price-amount"><sup>$</sup>299<span class="per">/ay</span></div>
           <ul class="price-features">
             <li>Silver'daki her şey</li>
             <li>Terk edilen sepet bildirimi</li>
@@ -559,8 +559,7 @@
         <div class="price-card popular reveal reveal-d3">
           <div class="popular-badge">⭐ EN POPÜLER</div>
           <div class="price-plan">Platinum</div>
-          <div class="price-amount"><sup>$</sup>599</div>
-          <div class="price-period">/ ay</div>
+          <div class="price-amount"><sup>$</sup>599<span class="per">/ay</span></div>
           <ul class="price-features">
             <li>Gold'daki her şey</li>
             <li>AI & segmentli bildirimler</li>
@@ -574,8 +573,8 @@
         <!-- Enterprise -->
         <div class="price-card reveal reveal-d4">
           <div class="price-plan">Enterprise</div>
-          <div class="price-amount" style="font-size:1.4rem;">$1,299<sup style="font-size:0.7rem;">/ay'dan</sup></div>
-          <div class="price-period">Shopify Plus & büyük hacimli mağazalar</div>
+          <div class="price-amount">$1,299<span class="per">/ay'dan</span></div>
+          <p style="font-size:0.72rem;color:var(--muted);margin-bottom:1.25rem;">Shopify Plus & büyük hacimli mağazalar</p>
           <ul class="price-features">
             <li>Platinum'daki her şey</li>
             <li>Çoklu mağaza desteği</li>
@@ -588,7 +587,7 @@
       </div>
 
       <div class="pricing-cta-note">
-        Hangi paketin uygun olduğunu bilmiyorsan sorun değil — <strong>birlikte karar vereceğiz.</strong>
+        Müşteriye hangi paketin uygun olduğuna, müşterinin isteklerine, ihtiyaçlarına ve analizlere göre karar verilecek.
       </div>
 
       <div class="shopify-link-box" style="margin-top:1.25rem;">
@@ -676,7 +675,7 @@
           <div class="flow-card akin">
             <div class="flow-who akin">Akın × Müşteri</div>
             <h4>Mail üzerinden süreç ilerler — uygulama şekillenir</h4>
-            <p>Tüm iletişim e-mailyoluyla yürür. Özellikler netleşir, tasarım yönü belirlenir, teknik yapılabilirlik değerlendirilir. Müşteri istediği her şeyi rahat rahat iletir.</p>
+            <p>Tüm iletişim e-mail yoluyla yürür. Özellikler netleşir, tasarım yönü belirlenir, teknik yapılabilirlik değerlendirilir. Müşteri istediği her şeyi rahat rahat iletir.</p>
           </div>
         </div>
 
