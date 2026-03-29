@@ -86,11 +86,13 @@
     nav ul a:hover { color: var(--purple); }
 
     /* MARQUEE */
-    .marquee-wrap { overflow: hidden; background: var(--dark); padding: 0.9rem 0; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); }
-    .marquee-track { display: flex; gap: 2.5rem; width: max-content; animation: marquee 28s linear infinite; }
+    .marquee-wrap { overflow: hidden; background: var(--dark); padding: 1.5rem 0; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .marquee-track { display: flex; align-items: center; gap: 3rem; width: max-content; animation: marquee 36s linear infinite; }
     .marquee-track:hover { animation-play-state: paused; }
-    .marquee-item { display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.55); font-size: 0.82rem; font-weight: 600; white-space: nowrap; }
-    .marquee-item::before { content: '◆'; color: var(--purple-mid); font-size: 0.5rem; }
+    .marquee-item { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; white-space: nowrap; }
+    .marquee-item img { height: 32px; width: auto; max-width: 110px; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.65; transition: opacity 0.2s; }
+    .marquee-item:hover img { opacity: 1; }
+    .marquee-sep { width: 1px; height: 36px; background: rgba(255,255,255,0.1); flex-shrink: 0; }
     @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
     /* BRANDS SECTION */
@@ -476,35 +478,62 @@
     <!-- Marquee ticker -->
     <div class="marquee-wrap">
       <div class="marquee-track">
-        <span class="marquee-item">Ohlala Sellerie</span>
-        <span class="marquee-item">Bella All Natural</span>
-        <span class="marquee-item">Bad Monday</span>
-        <span class="marquee-item">Shopi Go</span>
-        <span class="marquee-item">Miss Odd</span>
-        <span class="marquee-item">Mod Boutique</span>
-        <span class="marquee-item">Modern Quests</span>
-        <span class="marquee-item">Milagron</span>
-        <span class="marquee-item">Rowen</span>
-        <span class="marquee-item">SM Global Shop</span>
-        <span class="marquee-item">Moda More Positano</span>
-        <span class="marquee-item">Teami</span>
-        <span class="marquee-item">Touché Privé</span>
-        <span class="marquee-item">Valabasas</span>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/ohlala.png" alt="Ohlala Sellerie" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/bella.png" alt="Bella All Natural" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/bad-monday.png" alt="Bad Monday" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/shopi-go-v3.png" alt="Shopi Go" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/miss-odd.png" alt="Miss Odd" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/mod-boutique.png" alt="Mod Boutique" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/modern-quests.png" alt="Modern Quests" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/milagron.png" alt="Milagron" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/rowen.png" alt="Rowen" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/sm-global.png" alt="SM Global Shop" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/moda-mare.png" alt="Moda More Positano" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/teami.png" alt="Teami" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/touche.png" alt="Touché Privé" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/valabasas.png" alt="Valabasas" onerror="this.style.display='none'"></div>
         <!-- duplicate for seamless loop -->
-        <span class="marquee-item">Ohlala Sellerie</span>
-        <span class="marquee-item">Bella All Natural</span>
-        <span class="marquee-item">Bad Monday</span>
-        <span class="marquee-item">Shopi Go</span>
-        <span class="marquee-item">Miss Odd</span>
-        <span class="marquee-item">Mod Boutique</span>
-        <span class="marquee-item">Modern Quests</span>
-        <span class="marquee-item">Milagron</span>
-        <span class="marquee-item">Rowen</span>
-        <span class="marquee-item">SM Global Shop</span>
-        <span class="marquee-item">Moda More Positano</span>
-        <span class="marquee-item">Teami</span>
-        <span class="marquee-item">Touché Privé</span>
-        <span class="marquee-item">Valabasas</span>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/ohlala.png" alt="Ohlala Sellerie" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/bella.png" alt="Bella All Natural" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/bad-monday.png" alt="Bad Monday" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/shopi-go-v3.png" alt="Shopi Go" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/miss-odd.png" alt="Miss Odd" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/mod-boutique.png" alt="Mod Boutique" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/modern-quests.png" alt="Modern Quests" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/milagron.png" alt="Milagron" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/rowen.png" alt="Rowen" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/sm-global.png" alt="SM Global Shop" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/moda-mare.png" alt="Moda More Positano" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/teami.png" alt="Teami" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/touche.png" alt="Touché Privé" onerror="this.style.display='none'"></div>
+        <div class="marquee-sep"></div>
+        <div class="marquee-item"><img src="https://shopney.co/img/clients/fix/valabasas.png" alt="Valabasas" onerror="this.style.display='none'"></div>
       </div>
     </div>
   </section>
@@ -610,7 +639,7 @@
       <span class="section-tag">Süreç akışı</span>
       <h2 class="section-title">Kim ne yapıyor, hangi sırayla?</h2>
       <p class="section-sub">
-        Adım adım, renk renk. Senin rolün ne kadar az, kazancın ne kadar fazla — kendin gör.
+        Baştan sona her adım, kim ne yapıyor — net ve sıralı.
       </p>
 
       <!-- Legend -->
